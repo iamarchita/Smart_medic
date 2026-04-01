@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Doctor Dashboard – Smart Medic</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta http-equiv="refresh" content="30">
+</head>
+
+<body>
+
+<h2>Smart Medic – Doctor Dashboard</h2>
+<h3>Total Patients Waiting: {{ patients|length }}</h3>
+
+<table border="1">
+<tr>
+  <th>Priority</th>
+  <th>Name</th>
+  <th>Age</th>
+  <th>Symptoms</th>
+  <th>Arrival Time</th>
+  <th>Suggested Workup</th>
+</tr>
+
+{% for p in patients %}
+<tr class="{% if p[0] == 0 %}emergency{% elif p[0] == 1 %}critical{% elif p[0] == 2 %}serious{% else %}normal{% endif %}">
+  <td>
+    {% if p[0] == 0 %}🆘 Emergency
+    {% elif p[0] == 1 %}🔴 Critical
+    {% elif p[0] == 2 %}🟠 Serious
+    {% else %}🟢 Normal{% endif %}
+  </td>
+  <td>{{ p[1] }}</td>
+  <td>{{ p[2] }}</td>
+  <td>{{ p[3] }}</td>
+  <td>{{ p[4] }}</td>
+  <td style="font-size:12px; text-align:left; padding:8px;">
+    {{ p[6] if p|length > 6 else '-' }}
+  </td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/serve">
+  <button>✅ Serve Next Patient</button>
+</a>
+
+&nbsp;&nbsp;
+
+<a href="/">
+  <button>➕ Add New Patient</button>
+</a>
+
+<a href="/analytics"><button>📊 Analytics</button></a>
+
+
+<h3>⏱ Estimated Waiting Time: {{ wait }} minutes</h3>
+
+</body>
+</html>

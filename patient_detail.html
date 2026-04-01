@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Medic – Patient Token</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7fc;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      width: 100%;
+      max-width: 420px;
+      overflow: hidden;
+    }
+    .header {
+      background: #0a2540;
+      padding: 22px 24px;
+      text-align: center;
+    }
+    .header-title { font-size: 20px; font-weight: 600; color: #ffffff; margin-bottom: 4px; }
+    .header-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .token-box {
+      background: #e8f1fb;
+      margin: 20px 20px 0;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+    }
+    .token-label { font-size: 11px; color: #8a9bb0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .token-id { font-size: 38px; font-weight: 700; color: #0a2540; letter-spacing: 5px; }
+    .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 22px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+    .detail-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .detail-table tr { border-bottom: 1px solid #f0f4f9; }
+    .detail-table tr:last-child { border-bottom: none; }
+    .col-label {
+      padding: 13px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #8a9bb0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: 38%;
+      vertical-align: top;
+    }
+    .col-value {
+      padding: 13px 20px 13px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: #0a2540;
+      vertical-align: top;
+    }
+    .prediction-box {
+      margin: 16px 20px 0;
+      background: #f4f7fc;
+      border-radius: 10px;
+      padding: 14px;
+      border: 1px solid #e8f1fb;
+    }
+    .prediction-title { font-size: 13px; font-weight: 600; color: #1a4d8f; margin-bottom: 8px; }
+    .prediction-text { font-size: 12px; color: #3d4f63; line-height: 1.7; }
+    .history-wrap {
+      margin: 16px 20px 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e8f1fb;
+    }
+    .history-header {
+      background: #0a2540;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #00b4d8;
+    }
+    .history-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f4f9;
+      background: white;
+    }
+    .history-item:last-child { border-bottom: none; }
+    .history-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .history-date {
+      font-size: 11px;
+      font-weight: 600;
+      color: #8a9bb0;
+      text-transform: uppercase;
+    }
+    .history-badge {
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+    }
+    .history-symptoms {
+      font-size: 13px;
+      color: #0a2540;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .history-tests {
+      font-size: 11px;
+      color: #8a9bb0;
+      margin-top: 4px;
+    }
+    .footer {
+      background: #0a2540;
+      padding: 12px;
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="header">
+      <div class="header-title">🏥 Smart Medic</div>
+      <div class="header-sub">Patient Token Details</div>
+    </div>
+
+    <div class="token-box">
+      <div class="token-label">Token Number</div>
+      <div class="token-id">{{ token }}</div>
+      <span class="badge" style="background: {{ priority_color }};">
+        {{ priority_label }}
+      </span>
+    </div>
+
+    <table class="detail-table">
+      <tr>
+        <td class="col-label">👤 Name</td>
+        <td class="col-value">{{ name }}</td>
+      </tr>
+      <tr>
+        <td class="col-label">🎂 Age</td>
+        <td class="col-value">{{ age }} years</td>
+      </tr>
+      <tr>
+        <td class="col-label">🩺 Symptoms</td>
+        <td class="col-value">{{ symptoms }}</td>
+      </tr>
+      <tr>
+        <td class="col-label">🕐 Arrival</td>
+        <td class="col-value">{{ arrival }}</td>
+      </tr>
+      <tr>
+        <td class="col-label">👨‍⚕️ Doctor</td>
+        <td class="col-value">{{ doctor }}</td>
+      </tr>
+    </table>
+
+    <div class="prediction-box">
+      <div class="prediction-title">🤖 AI Prediction</div>
+      <div class="prediction-text">{{ prediction }}</div>
+    </div>
+
+    {% if history %}
+    <div class="history-wrap">
+      <div class="history-header">
+        🔄 Returning Patient — {{ history|length }} Previous Visit(s)
+      </div>
+      {% for h in history %}
+      <div class="history-item">
+        <div class="history-row">
+          <span class="history-date">Token: {{ h[0] }}</span>
+          <span class="history-badge" style="background:
+            {% if h[2] == 0 %}#c0392b
+            {% elif h[2] == 1 %}#e63946
+            {% elif h[2] == 2 %}#f4a261
+            {% else %}#2dc653{% endif %};">
+            {% if h[2] == 0 %}🆘 Emergency
+            {% elif h[2] == 1 %}🔴 Critical
+            {% elif h[2] == 2 %}🟠 Serious
+            {% else %}🟢 Normal{% endif %}
+          </span>
+        </div>
+        <div class="history-symptoms">🩺 {{ h[1] }}</div>
+        {% if h[5] and "Recommended Tests:" in h[5] %}
+        <div class="history-tests">
+          🔬 {{ h[5].split("Recommended Tests:")[-1].strip() }}
+        </div>
+        {% endif %}
+        <div class="history-row" style="margin-top: 6px;">
+          <span class="history-date">🕐 {{ h[3] }}</span>
+          <span style="font-size:11px; color:
+            {% if h[4] == 'served' %}#2dc653{% else %}#f4a261{% endif %};">
+            {% if h[4] == 'served' %}✅ Served{% else %}⏳ Waiting{% endif %}
+          </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="footer">Smart Medic – Emergency Queue Manager</div>
+
+  </div>
+</body>
+</html>

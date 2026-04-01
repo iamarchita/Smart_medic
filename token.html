@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Your Token – Smart Medic</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-deep:   #0a2540;
+      --blue-mid:    #1a4d8f;
+      --blue-bright: #2d7dd2;
+      --blue-light:  #e8f1fb;
+      --accent:      #00b4d8;
+      --gray-soft:   #f4f7fc;
+      --gray-mid:    #8a9bb0;
+      --gray-dark:   #3d4f63;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-soft);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--blue-deep);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+      background: var(--accent);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .logo-text { color: white; font-size: 20px; font-weight: 600; }
+    .logo-text span { color: var(--accent); }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .token-card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 8px 40px rgba(10,37,64,0.12);
+      overflow: hidden;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .success-header {
+      background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 100%);
+      padding: 28px 32px;
+      text-align: center;
+      color: white;
+    }
+    .success-icon {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 14px;
+    }
+    .success-header h2 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+    .success-header p  { font-size: 13px; opacity: 0.7; }
+
+    .card-body { padding: 28px 32px; }
+
+    .patient-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--gray-soft);
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .patient-avatar {
+      width: 40px; height: 40px;
+      background: var(--blue-light);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .patient-name  { font-size: 16px; font-weight: 600; color: var(--blue-deep); }
+    .patient-label { font-size: 11px; color: var(--gray-mid); text-transform: uppercase; letter-spacing: 0.6px; }
+
+    .token-section { text-align: center; margin-bottom: 20px; }
+    .token-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+    .token-id {
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--blue-deep);
+      letter-spacing: 6px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .priority-section { text-align: center; margin-bottom: 20px; }
+    .priority-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 22px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .Emergency { background: #c0392b; color: white; }
+    .Critical  { background: #ff6b6b; color: white; }
+    .Serious   { background: #ffa94d; color: white; }
+    .Normal    { background: #d3f9d8; color: #2b8a3e; }
+
+    .qr-section {
+      text-align: center;
+      padding: 20px;
+      background: var(--gray-soft);
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .qr-label  { font-size: 12px; color: var(--gray-mid); margin-bottom: 14px; }
+    .qr-img {
+      display: block;
+      margin: 0 auto;
+      border: 3px solid white;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .qr-hint { font-size: 11px; color: var(--gray-mid); margin-top: 12px; }
+
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue-bright), var(--blue-mid));
+      color: white;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(45,125,210,0.35); }
+    .btn-secondary {
+      background: var(--gray-soft);
+      color: var(--blue-mid);
+      border: 1.5px solid #dde3ed;
+    }
+    .btn-secondary:hover { border-color: var(--blue-bright); }
+  </style>
+</head>
+
+<body>
+
+  <header>
+  <div class="logo-icon">🏥</div>
+  <div class="logo-text">Smart<span>Medic</span></div>
+  </header>
+
+  <main>
+  <div class="token-card">
+
+    <div class="success-header">
+      <div class="success-icon">✅</div>
+      <h2>Registration Successful</h2>
+      <p>Your token has been generated</p>
+    </div>
+
+    <div class="card-body">
+
+      <div class="patient-row">
+        <div class="patient-avatar">👤</div>
+        <div>
+          <div class="patient-label">Patient</div>
+          <div class="patient-name">{{ name }}</div>
+        </div>
+      </div>
+
+      {% if history %}
+<div style="margin: 0 20px 20px; border-radius: 10px; overflow: hidden; border: 1px solid #e8f1fb;">
+  
+  <div style="background: #0a2540; padding: 12px 16px;">
+    <div style="font-size: 13px; font-weight: 600; color: #00b4d8;">
+      🔄 Returning Patient — {{ history|length }} Previous Visit(s)
+    </div>
+  </div>
+
+  {% for h in history %}
+  <div style="padding: 12px 16px; border-bottom: 1px solid #f0f4f9; background: white;">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+      <span style="font-size: 11px; font-weight: 600; color: #8a9bb0; text-transform: uppercase;">
+        Visit — {{ h[4].strftime('%d %b %Y') if h[4] else 'N/A' }}
+      </span>
+      <span style="font-size: 11px; padding: 2px 10px; border-radius: 10px; color: white;
+                   background: {% if h[1] == 0 %}#c0392b{% elif h[1] == 1 %}#e63946{% elif h[1] == 2 %}#f4a261{% else %}#2dc653{% endif %};">
+        {% if h[1] == 0 %}Emergency{% elif h[1] == 1 %}Critical{% elif h[1] == 2 %}Serious{% else %}Normal{% endif %}
+      </span>
+    </div>
+    <div style="font-size: 13px; color: #0a2540; font-weight: 500; margin-bottom: 4px;">
+      🩺 {{ h[0] }}
+    </div>
+    {% if h[3] and "Recommended Tests:" in h[3] %}
+    <div style="font-size: 11px; color: #8a9bb0;">
+      🔬 {{ h[3].split("Recommended Tests:")[-1].strip() }}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+</div>
+{% endif %}
+
+      <div class="token-section">
+        <div class="token-label">Your Token Number</div>
+        <div class="token-id">{{ token }}</div>
+      </div>
+
+      <div class="priority-section">
+        <span class="priority-badge {{ priority }}">
+          {% if priority == "Emergency" %}🆘
+          {% elif priority == "Critical" %}🔴
+          {% elif priority == "Serious" %}🟠
+          {% else %}🟢{% endif %}
+          {{ priority }} Priority
+        </span>
+      </div>
+
+      <div class="qr-section">
+        <div class="qr-label">Show this QR code at the counter when your turn comes</div>
+        <img class="qr-img"
+             src="{{ url_for('static', filename=qr_image) }}"
+             width="180" height="180"
+             alt="QR Code">
+        <div class="qr-hint">📸 Save a screenshot of this token for your records</div>
+      </div>
+
+      <div class="actions">
+        <a href="/dashboard" class="btn btn-primary">📋 View Queue</a>
+        <a href="/" class="btn btn-secondary">➕ Add Another</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

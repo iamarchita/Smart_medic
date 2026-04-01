@@ -1,0 +1,106 @@
+General Page Styling
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f8fb;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Heading */
+h2{
+    color: #1a4d8f;
+    margin-top: 30px;
+} 
+
+/* Form Styling */
+ form{
+    background: white;
+    width: 400px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+} */
+ input, select{
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+} 
+
+/* Buttons */
+ button{
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+} 
+
+ button:hover{
+    background-color: #1558b0;
+} 
+
+/* Table Styling */
+ table{
+    margin: 30px auto;
+    border-collapse: collapse;
+    width: 80%;
+    background: white;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+} 
+
+ th, td{
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+} 
+
+th{
+    background-color: #1a4d8f;
+    color: white;
+} 
+
+/* Priority Colors */
+ .critical{
+    background-color: #ff6b6b;
+    color: white;
+} 
+
+.serious{
+    background-color: #ffa94d;
+} 
+
+.normal{
+    background-color: #8ce99a;
+} */
+
+/* Dashboard Info */
+h3{
+    color: #333;
+} 
+
+/* Links */
+ a{
+    text-decoration: none;
+} 
+
+ .active-doctor {
+    background-color: #1a4d8f;
+    color: white;
+} 
+
+.emergency {
+    background-color: #c0392b;
+    color: white;
+    font-weight: bold;
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.4; }
+}  
